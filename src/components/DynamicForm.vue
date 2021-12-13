@@ -43,7 +43,8 @@ export default {
   },
   methods: {
     loadThings () {
-      const endpoint = 'http://localhost:8080/things'
+      const baseUrl = process.env.VUE_APP_BACKEND_BASE_URL
+      const endpoint = baseUrl + '/things'
       const requestOptions = {
         method: 'GET',
         redirect: 'follow'
@@ -56,7 +57,8 @@ export default {
         .catch(error => console.log('error', error))
     },
     save () {
-      const endpoint = 'http://localhost:8080/things'
+      const baseUrl = process.env.VUE_APP_BACKEND_BASE_URL
+      const endpoint = baseUrl + '/things'
       const data = {
         name: this.nameField,
         price: this.priceField
