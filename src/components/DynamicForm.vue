@@ -17,9 +17,9 @@
       <tr v-if="items.length === 0">
         <td colspan="2">No products yet</td>
       </tr>
-      <tr v-for="product in items" :key="product.name">
-        <td>{{product.name}}</td>
-        <td>{{product.price}}</td>
+      <tr v-for="item in items" :key="item.id">
+        <td>{{item.name}}</td>
+        <td>{{item.price}}</td>
       </tr>
       <tr>
         <td>{{ nameField }}</td>
