@@ -39,7 +39,8 @@ export default {
       items: [],
       nameField: '',
       priceField: '',
-      claims: ''
+      claims: '',
+      accessToken: ''
     }
   },
   methods: {
@@ -49,7 +50,10 @@ export default {
       const endpoint = baseUrl + '/things' + '?owner=' + email
       const requestOptions = {
         method: 'GET',
-        redirect: 'follow'
+        redirect: 'follow',
+        headers: {
+          Authorization: 'Bearer ' + this.accessToken
+        }
       }
       fetch(endpoint, requestOptions)
         .then(response => response.json())
@@ -69,7 +73,8 @@ export default {
       const requestOptions = {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + this.accessToken
         },
         body: JSON.stringify(data)
       }
@@ -81,14 +86,17 @@ export default {
         .catch(error => console.log('error', error))
     },
     async setup () {
-      if (this.$root.authenticated) { this.claims = await this.$auth.getUser() }
+      if (this.$root.authenticated) {
+        this.claims = await this.$auth.getUser()
+        this.accessToken = await this.$auth.getAccessToken()
+      }
     }
-  },
-  mounted () {
   },
   async created () {
     await this.setup()
     this.loadThings()
+  },
+  mounted () {
   }
 }
 </script>
