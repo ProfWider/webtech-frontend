@@ -1,6 +1,5 @@
 <template>
   <div id="home" class="home">
-    <h1>Custom Login Page with Sign In Widget</h1>
     <div v-if="!this.$root.authenticated">
       <p>Hello, Vue.</p>
       <router-link role="button" to="/login">
