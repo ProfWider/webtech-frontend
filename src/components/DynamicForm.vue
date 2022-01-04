@@ -38,13 +38,15 @@ export default {
     return {
       items: [],
       nameField: '',
-      priceField: ''
+      priceField: '',
+      claims: ''
     }
   },
   methods: {
     loadThings () {
       const baseUrl = process.env.VUE_APP_BACKEND_BASE_URL
-      const endpoint = baseUrl + '/things'
+      const email = this.claims.email
+      const endpoint = baseUrl + '/things' + '?owner=' + email
       const requestOptions = {
         method: 'GET',
         redirect: 'follow'
@@ -61,7 +63,8 @@ export default {
       const endpoint = baseUrl + '/things'
       const data = {
         name: this.nameField,
-        price: this.priceField
+        price: this.priceField,
+        owner: this.claims.email
       }
       const requestOptions = {
         method: 'POST',
@@ -76,9 +79,15 @@ export default {
           console.log('Success:', data)
         })
         .catch(error => console.log('error', error))
+    },
+    async setup () {
+      if (this.$root.authenticated) { this.claims = await this.$auth.getUser() }
     }
   },
   mounted () {
+  },
+  async created () {
+    await this.setup()
     this.loadThings()
   }
 }
