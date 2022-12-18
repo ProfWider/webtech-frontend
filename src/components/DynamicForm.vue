@@ -50,10 +50,10 @@ export default {
       const endpoint = baseUrl + '/things' + '?owner=' + email
       const requestOptions = {
         method: 'GET',
-        redirect: 'follow',
-        headers: {
-          Authorization: 'Bearer ' + this.accessToken
-        }
+        redirect: 'follow'
+        // headers: {
+        //   Authorization: 'Bearer ' + this.accessToken
+        // }
       }
       fetch(endpoint, requestOptions)
         .then(response => response.json())
@@ -73,8 +73,8 @@ export default {
       const requestOptions = {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + this.accessToken
+          'Content-Type': 'application/json'
+          // Authorization: 'Bearer ' + this.accessToken
         },
         body: JSON.stringify(data)
       }
@@ -88,7 +88,7 @@ export default {
     async setup () {
       if (this.$root.authenticated) {
         this.claims = await this.$auth.getUser()
-        this.accessToken = await this.$auth.getAccessToken()
+        // this.accessToken = await this.$auth.getAccessToken()
       }
     }
   },
