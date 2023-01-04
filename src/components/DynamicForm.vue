@@ -4,6 +4,7 @@
     <input v-model="nameField" placeholder="Name" type="text" ref="nameInput">
     <input v-model="priceField" placeholder="Price" @keyup.enter="save()">
     <button type="button" @click="save()">Save</button>
+    <input v-model="filterCrit" placeholder="filter criterion">
   </div>
   <div>
     <table>
@@ -17,7 +18,7 @@
       <tr v-if="items.length === 0">
         <td colspan="2">No products yet</td>
       </tr>
-      <tr v-for="item in items" :key="item.id">
+      <tr v-for="item in myFilterFunc(filterCrit)" :key="item.id">
         <td>{{item.name}}</td>
         <td>{{item.price}}</td>
       </tr>
@@ -40,10 +41,16 @@ export default {
       nameField: '',
       priceField: '',
       claims: '',
-      accessToken: ''
+      accessToken: '',
+      filterCrit: ''
     }
   },
   methods: {
+    myFilterFunc (crit) {
+      return this.items.filter(
+        it => crit.length < 1 ||
+          it.name.toLowerCase().includes(crit.toLowerCase()))
+    },
     loadThings () {
       const baseUrl = process.env.VUE_APP_BACKEND_BASE_URL
       const email = this.claims.email
